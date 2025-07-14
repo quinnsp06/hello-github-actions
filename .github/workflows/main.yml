@@ -2,12 +2,18 @@ name: Build com IA Debug
 
 on:
   push:
-    branches: [ "dev" ]
+    branches:
+      - main
+      - dev
+      - feature/*
+      - hotfix/*
+      - bugfix/*
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Executa build e IA explicativa
+    name: Executa build e IA 
 
     env:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
