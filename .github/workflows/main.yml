@@ -2,7 +2,7 @@ name: Build com IA Debug
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 jobs:
   build:
@@ -29,4 +29,4 @@ jobs:
         if: failure()
         run: |
           echo "Executando IA para explicar erro..."
-          python3 ai_helper/explain_error.py < build.log
+          python3 ai/analise.py < build.log
