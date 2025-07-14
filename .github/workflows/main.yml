@@ -1,11 +1,32 @@
-name: A workflow for my Hello World file
-on: push
+name: Build com IA Debug
+
+on:
+  push:
+    branches: [ "main" ]
+
 jobs:
   build:
-    name: Hello world action
     runs-on: ubuntu-latest
+    name: Executa build e IA explicativa
+
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: ./action-a
-        with:
-          MY_NAME: "Elcio"
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Instala dependências
+        run: pip install requests
+
+      - name: Executa build com possível erro
+        id: build_step
+        run: |
+          python3 pipeline_code/build.py 2>&1 | tee build.log
+        continue-on-error: true
+
+      - name: Executa IA explicadora se falhar
+        if: failure()
+        run: |
+          echo "Executando IA para explicar erro..."
+          python3 ai_helper/explain_error.py < build.log
