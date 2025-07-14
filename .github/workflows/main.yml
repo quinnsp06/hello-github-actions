@@ -30,7 +30,7 @@ jobs:
         run: |
           set +e
           python3 pipeline_code/build.py 2>&1 | tee build.log
-          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
           exit 0
         continue-on-error: true
 
